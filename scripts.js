@@ -180,4 +180,3 @@ function games() {
     }% af heild.`);
   } else confirm("Þú hefur spilað 0 leiki");
 }
-// Hér getum við ekki skrifað test þar sem fallið les úr global state
