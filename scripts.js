@@ -33,10 +33,6 @@ function isValidBestOf(bestOf) {
     }
   }
 
-//console.assert(isValidBestOf(1) === true, '1 er valid best of');
-//console.assert(isValidBestOf(2) === false, '2 er ekki er valid best of');
-//console.assert(isValidBestOf(9) === true, '9 er valid best of');
-
 function playAsText(play) {
   // TODO útfæra
   if (play === "1"){
@@ -52,10 +48,6 @@ function playAsText(play) {
     return "Óþekkt";
   }
 }
-//console.assert(playAsText('1') === 'Skæri', '1 táknar skæri');
-//console.assert(playAsText('2') === 'Blað', '2 táknar blað');
-//console.assert(playAsText('3') === 'Steinn', '3 táknar steinn');
-//console.assert(playAsText('foo') === 'Óþekkt', 'Annað er óþekkt');
 
 /**
  * Athugar hvort spilari eða tölva vinnur.
@@ -82,60 +74,51 @@ function checkGame(player, computer) {
   }
  
 }
-console.assert(checkGame('1', '2') === 1, 'Skæri vinnur blað');
-console.assert(checkGame('2', '3') === 1, 'Blað vinnur stein');
-console.assert(checkGame('3', '1') === 1, 'Steinn vinnur skæri');
-console.assert(checkGame('1', '1') === 0, 'Skæri og skæri eru jafntefli');
-console.assert(checkGame('1', '3') === -1, 'Skæri tapar fyrir stein');
 
 /**
  * Spilar einn leik.
  * @return {boolean} -1 ef tölva vann, 0 ef jafntefli, 1 ef spilari vann
  */
 function round() {
-  // TODO útfæra
   // 1. Spyrja um hvað spilað, ef cancel, hætta
   const player = prompt("Skæri (1), steinn (2), blað(3)?");
   
   if (player === null){
     return null;
   }
+
+  if (playAsText(player) === "Óþekkt"){
+    return -1;
+  }
   
   // 2. Ef ógilt, tölva vinnur
   // 3. Velja gildi fyrir tölvu með `Math.floor(Math.random() * 3) + 1` sem skilar heiltölu á [1, 3]
-  const computer = toString(Math.floor(Math.random() * 3) + 1);
+  const computer = (Math.floor(Math.random() * 3) + 1).toString();
   // 4. Nota `checkGame()` til að finna hver vann
   // 5. Birta hver vann
-  if (player !== '1' || player !== '2' || player !== '3'){
-    return -1;
-  }
 
   let roundResult = checkGame(player, computer);
 
   if (roundResult === 1){
     confirm(`Spilari valdi ${playAsText(player)} og tölvan valdi ${playAsText(computer)}. Spilari vann!`)
-    return 1;
   }
   else if (roundResult === -1){
     confirm(`Spilari valdi ${playAsText(player)} og tölvan valdi ${playAsText(computer)}. Tölvan vann :(`);
-    return 1;
   }
   else if(roundResult === 0){
     confirm(`Spilari valdi ${playAsText(player)} og tölvan valdi ${playAsText(computer)}. Jafntefli!`);
-    return 0;
   }
   // 6. Skila hver vann
-  //return checkGame(player, computer);
+  return roundResult;
 }
-// Hér getum við ekki skrifað test þar sem fallið mun biðja notanda um inntak!
 
 /**
  * Spilar leik og bætir útkomu (sigur eða tap) við í viðeigandi global breytu.
  */
 function play() {
 
-  const playerRounds = 0;
-  const computerRounds = 0;
+  let playerRounds = 0;
+  let computerRounds = 0;
   
   // 1. Spyrja um fjölda leikja
   const bestOf = prompt("Besta af?");
@@ -143,19 +126,21 @@ function play() {
   // 2. Staðfesta að fjöldi leikja sé gilt gildi
   // 3. Keyra fjölda leikja og spila umferð þar til sigurvegari er krýndur
   if (isValidBestOf(bestOf)){
-    while (playerRounds < (bestOf/2+1) && computerRounds < (bestOf/2+1)){
-      round();
-      if (round() === 1){ 
+    while (playerRounds < Math.floor((bestOf/2+1)) && computerRounds < Math.floor((bestOf/2+1))){
+      const result = round();
+      if (result === 1){ 
         playerRounds++;
       }
-      else if (round() === -1){ 
+      else if (result === -1){ 
         computerRounds++;
       }
+      console.log("spilar:" + playerRounds);
+      console.log("computer:" + computerRounds);
     }
   }
   
   // 4. Birta hvort spilari eða tölva vann
-  if(playerRounds === (bestOf/2+1)){
+  if(playerRounds >= Math.floor((bestOf/2+1))){
     confirm("Spilari vann leikinn!");
     wins++;
   }
@@ -166,9 +151,6 @@ function play() {
   
   playerRounds = 0;
   computerRounds = 0;
-
-  play();
-
 }
 // Hér getum við ekki skrifað test þar sem fallið mun biðja notanda um inntak!
 
@@ -176,6 +158,6 @@ function play() {
  * Birtir stöðu spilara.
  */
 function games() {
-  confirm(`Þú hefur spilað ${wins}${losses} leiki.\n Þú hefur unnið ${wins}, eða ${100*(wins/(wins+losses)).toFixed(2)} af heild.`);
+  confirm(`Þú hefur spilað ${wins + losses} leiki.\n Þú hefur unnið ${wins}, eða ${100*(wins/(wins+losses)).toFixed(2)}% af heild.`);
 }
 // Hér getum við ekki skrifað test þar sem fallið les úr global state
