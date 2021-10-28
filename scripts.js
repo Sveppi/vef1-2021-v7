@@ -18,7 +18,7 @@ let losses = 0;
  * @return {boolean} true eða false
  */
 function isValidBestOf(bestOf) {
-  if (bestOf > MAX_BEST_OF || bestOf < 0){
+  if (bestOf >= MAX_BEST_OF || bestOf < 1){
     alert("Fjöldi leikja utan marka");
     return false;
   }
@@ -39,6 +39,18 @@ function isValidBestOf(bestOf) {
 
 function playAsText(play) {
   // TODO útfæra
+  if (play === 1){
+    return "skæri";
+  }
+  else if (play === 2){
+    return "steinn";
+  }
+  else if (play === 3){
+    return "blað";
+  }
+  else{
+    return "Óþekkt";
+  }
 }
 // console.assert(playAsText('1') === 'Skæri', '1 táknar skæri');
 // console.assert(playAsText('2') === 'Blað', '2 táknar blað');
@@ -83,29 +95,34 @@ function checkGame(player, computer) {
 function round() {
   // TODO útfæra
   // 1. Spyrja um hvað spilað, ef cancel, hætta
-  let player = prompt("Skærri (1), steinn (2), blað(3)?");
-  if (player > 3 || player < 1){
-    round();
-  }
-  if (player === null){
-    play();
-  }
+  let player = prompt("Skæri (1), steinn (2), blað(3)?");
+  
+  
   // 2. Ef ógilt, tölva vinnur
   // 3. Velja gildi fyrir tölvu með `Math.floor(Math.random() * 3) + 1` sem skilar heiltölu á [1, 3]
   let computer = Math.floor(Math.random() * 3) + 1;
   // 4. Nota `checkGame()` til að finna hver vann
   // 5. Birta hver vann
-  if (checkGame(player, computer) === 1){
-    alert("Spilar valdi " + player + " og tölvan valdi " + computer + ". Spilari vann!")
+  if (player > 3 || player < 1){
+    return -1;
+  }
+  else if (player === null){
+    return;
+  }
+  else if (checkGame(player, computer) === 1){
+    alert(`Spilar valdi ${playAsText(player)} og tölvan valdi ${playAsText(computer)}. Spilari vann!`)
+    return 1;
   }
   else if (checkGame(player, computer) === -1){
-    alert("Spilar valdi " + player + " og tölvan valdi " + computer + ". Tölvan vann :(");
+    alert(`Spilar valdi ${playAsText(player)} og tölvan valdi ${playAsText(computer)}. Tölvan vann :(`);
+    return 1;
   }
   else if(checkGame(player,computer) === 0){
-    alert("Spilar valdi " + player + " og tölvan valdi " + computer + ". Jafntefli!");
+    alert(`Spilar valdi ${playAsText(player)} og tölvan valdi ${playAsText(computer)}. Jafntefli!`);
+    return 0;
   }
   // 6. Skila hver vann
-  return checkGame(player, computer);
+  //return checkGame(player, computer);
 }
 // Hér getum við ekki skrifað test þar sem fallið mun biðja notanda um inntak!
 
@@ -129,7 +146,7 @@ function play() {
       if (round() === 1) playerRounds++;
       else if (round() === -1) computerRounds++;
     }
-  }
+  }else play();
   
   
   // 4. Birta hvort spilari eða tölva vann
@@ -144,6 +161,8 @@ function play() {
   
   playerRounds = 0;
   computerRounds = 0;
+
+  play();
 
 }
 // Hér getum við ekki skrifað test þar sem fallið mun biðja notanda um inntak!
