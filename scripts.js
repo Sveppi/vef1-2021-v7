@@ -66,8 +66,8 @@ function playAsText(play) {
 function checkGame(player, computer) {
   // TODO útfæra
   if(player === '1' && computer === '2' || 
-    player === '2' && computer === '3' ||
-    player === '3' && computer === '1'){
+      player === '2' && computer === '3' ||
+      player === '3' && computer === '1'){
       return 1;
     }
   else if(player === '2' && computer === '1' || 
@@ -145,14 +145,17 @@ function play() {
   if (isValidBestOf(bestOf)){
     while (playerRounds < (bestOf/2+1) && computerRounds < (bestOf/2+1)){
       round();
-      if (round() === 1) playerRounds++;
-      else if (round() === -1) computerRounds++;
+      if (round() === 1){ 
+        playerRounds++;
+      }
+      else if (round() === -1){ 
+        computerRounds++;
+      }
     }
   }
   
-  
   // 4. Birta hvort spilari eða tölva vann
-  if(playerRounds = (bestOf/2+1)){
+  if(playerRounds === (bestOf/2+1)){
     confirm("Spilari vann leikinn!");
     wins++;
   }
