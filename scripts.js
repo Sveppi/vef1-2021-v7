@@ -35,7 +35,6 @@ function isValidBestOf(bestOf) {
 }
 
 function playAsText(play) {
-  // TODO útfæra
   if (play === "1") {
     return "skæri";
   } else if (play === "2") {
@@ -56,25 +55,16 @@ function playAsText(play) {
  * @returns -1 ef tölva vann, 0 ef jafntefli, 1 ef spilari vann
  */
 function checkGame(player, computer) {
-  // TODO útfæra
   if (
     (player === "1" && computer === "3") ||
     (player === "2" && computer === "1") ||
     (player === "3" && computer === "2")
   ) {
     return 1;
-  } else if (
-    (player === "1" && computer === "2") ||
-    (player === "2" && computer === "3") ||
-    (player === "3" && computer === "1")
-  ) {
-    return -1;
-  } else if (
-    (player === "1" && computer === "1") ||
-    (player === "2" && computer === "2") ||
-    (player === "3" && computer === "3")
-  ) {
+  } else if (player === computer) {
     return 0;
+  } else {
+    return -1;
   }
 }
 
@@ -85,19 +75,18 @@ function checkGame(player, computer) {
 function round() {
   // 1. Spyrja um hvað spilað, ef cancel, hætta
   const player = prompt("Sláðu inn tölu: Skæri (1), steinn (2), blað (3)?");
- 
+
   // 2. Ef ógilt, tölva vinnur
   if (player == null) {
     process.exit(0);
   } else if (playAsText(player) === "Óþekkt") {
-    alert("Ólöglegt inntak, tölvan vann þessa lotu :(")
+    alert("Ólöglegt inntak, tölvan vann þessa lotu :(");
     return -1;
   }
 
- 
   // 3. Velja gildi fyrir tölvu með `Math.floor(Math.random() * 3) + 1` sem skilar heiltölu á [1, 3]
   const computer = (Math.floor(Math.random() * 3) + 1).toString();
-  
+
   // 4. Nota `checkGame()` til að finna hver vann
   // 5. Birta hver vann
   let roundResult = checkGame(player, computer);
@@ -171,11 +160,9 @@ function play() {
  */
 function games() {
   if (wins + losses > 0) {
-    confirm(`Þú hefur spilað ${wins + losses} leiki.\n
-          Þú hefur unnið ${wins}, eða ${
+    confirm(`Þú hefur spilað ${wins + losses} leiki.\nÞú hefur unnið ${wins}, eða ${
       100 * (wins / (wins + losses)).toFixed(2)
-    }% af heild.\n
-          Þú hefur tapað ${losses}, eða ${
+    }% af heild.\nÞú hefur tapað ${losses}, eða ${
       100 * (losses / (wins + losses)).toFixed(2)
     }% af heild.`);
   } else confirm("Þú hefur spilað 0 leiki");
