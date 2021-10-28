@@ -175,7 +175,7 @@ function games() {
           Þú hefur unnið ${wins}, eða ${
       100 * (wins / (wins + losses)).toFixed(2)
     }% af heild.\n
-          Þú hefur tapað ${loses}, eða ${
+          Þú hefur tapað ${losses}, eða ${
       100 * (losses / (wins + losses)).toFixed(2)
     }% af heild.`);
   } else confirm("Þú hefur spilað 0 leiki");
