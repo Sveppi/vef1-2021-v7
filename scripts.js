@@ -92,19 +92,19 @@ function round() {
   let roundResult = checkGame(player, computer);
 
   if (roundResult === 1) {
-    confirm(
+    alert(
       `Spilari valdi ${playAsText(player)} og tölvan valdi ${playAsText(
         computer
       )}. Spilari vann lotuna!`
     );
   } else if (roundResult === -1) {
-    confirm(
+    alert(
       `Spilari valdi ${playAsText(player)} og tölvan valdi ${playAsText(
         computer
       )}. Tölvan vann lotuna :(`
     );
   } else if (roundResult === 0) {
-    confirm(
+    alert(
       `Spilari valdi ${playAsText(player)} og tölvan valdi ${playAsText(
         computer
       )}. Jafntefli!`
@@ -137,17 +137,17 @@ function play() {
       } else if (result === -1) {
         computerRounds++;
       }
-      console.log("Stig spilara:" + playerRounds);
-      console.log("Stig tölvu:" + computerRounds);
+      console.log("Stig spilara: " + playerRounds);
+      console.log("Stig tölvu: " + computerRounds);
     }
   }
 
   // 4. Birta hvort spilari eða tölva vann
   if (playerRounds >= Math.floor(bestOf / 2 + 1)) {
-    confirm("Spilari vann leikinn!");
+    alert("Spilari vann leikinn!");
     wins++;
   } else {
-    confirm("Tölvan vann leikinn :(");
+    alert("Tölvan vann leikinn :(");
     losses++;
   }
 
@@ -160,10 +160,10 @@ function play() {
  */
 function games() {
   if (wins + losses > 0) {
-    confirm(`Þú hefur spilað ${wins + losses} leiki.\nÞú hefur unnið ${wins}, eða ${
+    alert(`Þú hefur spilað ${wins + losses} leiki.\nÞú hefur unnið ${wins}, eða ${
       100 * (wins / (wins + losses)).toFixed(2)
     }% af heild.\nÞú hefur tapað ${losses}, eða ${
       100 * (losses / (wins + losses)).toFixed(2)
     }% af heild.`);
-  } else confirm("Þú hefur spilað 0 leiki");
+  } else alert("Þú hefur spilað 0 leiki");
 }
