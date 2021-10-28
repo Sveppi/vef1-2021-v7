@@ -18,9 +18,13 @@ let losses = 0;
  * @return {boolean} true eða false
  */
 function isValidBestOf(bestOf) {
-  if (bestOf >= MAX_BEST_OF || bestOf < 1){
-    alert("Fjöldi leikja utan marka");
-    return false;
+  if (bestOf === null){
+    console.error("Spilari hætti við")
+    process.exit(0);
+  }
+  else if (bestOf >= MAX_BEST_OF || bestOf < 1){
+    console.error("Fjöldi leikja utan marka");
+    process.exit(0);
   }
   else{
     if (bestOf % 2 === 0){
@@ -43,6 +47,9 @@ function playAsText(play) {
   }
   else if (play === "3"){
     return "blað";
+  }
+  else if (play === null){
+   process.exit(0);
   }
   else{
     return "Óþekkt";
@@ -82,12 +89,12 @@ function checkGame(player, computer) {
 function round() {
   // 1. Spyrja um hvað spilað, ef cancel, hætta
   const player = prompt("Skæri (1), steinn (2), blað(3)?");
+  console.log("input:" + player);
   
-  if (player === null){
-    return null;
+  if (player == null){
+    process.exit(0);
   }
-
-  if (playAsText(player) === "Óþekkt"){
+  else if (playAsText(player) === "Óþekkt"){
     return -1;
   }
   
@@ -158,6 +165,9 @@ function play() {
  * Birtir stöðu spilara.
  */
 function games() {
+  if ((wins+losses) > 0){
   confirm(`Þú hefur spilað ${wins + losses} leiki.\n Þú hefur unnið ${wins}, eða ${100*(wins/(wins+losses)).toFixed(2)}% af heild.`);
+}
+else confirm("Þú hefur ekki spilað leik");
 }
 // Hér getum við ekki skrifað test þar sem fallið les úr global state
