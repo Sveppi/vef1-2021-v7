@@ -33,9 +33,9 @@ function isValidBestOf(bestOf) {
     }
   }
 
-console.assert(isValidBestOf(1) === true, '1 er valid best of');
-console.assert(isValidBestOf(2) === false, '2 er ekki er valid best of');
-console.assert(isValidBestOf(9) === true, '9 er valid best of');
+//console.assert(isValidBestOf(1) === true, '1 er valid best of');
+//console.assert(isValidBestOf(2) === false, '2 er ekki er valid best of');
+//console.assert(isValidBestOf(9) === true, '9 er valid best of');
 
 function playAsText(play) {
   // TODO útfæra
@@ -52,10 +52,10 @@ function playAsText(play) {
     return "Óþekkt";
   }
 }
-console.assert(playAsText('1') === 'Skæri', '1 táknar skæri');
-console.assert(playAsText('2') === 'Blað', '2 táknar blað');
-console.assert(playAsText('3') === 'Steinn', '3 táknar steinn');
-console.assert(playAsText('foo') === 'Óþekkt', 'Annað er óþekkt');
+//console.assert(playAsText('1') === 'Skæri', '1 táknar skæri');
+//console.assert(playAsText('2') === 'Blað', '2 táknar blað');
+//console.assert(playAsText('3') === 'Steinn', '3 táknar steinn');
+//console.assert(playAsText('foo') === 'Óþekkt', 'Annað er óþekkt');
 
 /**
  * Athugar hvort spilari eða tölva vinnur.
@@ -65,19 +65,19 @@ console.assert(playAsText('foo') === 'Óþekkt', 'Annað er óþekkt');
  */
 function checkGame(player, computer) {
   // TODO útfæra
-  if(player === "1" && computer === "2" || 
-    player === "2" && computer === "3" ||
-    player === "3" && computer === "1"){
+  if(player === '1' && computer === '2' || 
+    player === '2' && computer === '3' ||
+    player === '3' && computer === '1'){
       return 1;
     }
-  else if(player === "2" && computer === "1" || 
-      player === "3" && computer === "2" ||
-      player === "1" && computer === "3"){
+  else if(player === '2' && computer === '1' || 
+      player === '3' && computer === '2' ||
+      player === '1' && computer === '3'){
         return -1;
     }
-  else if (player === "2" && computer === "2" || 
-      player === "3" && computer === "3" ||
-      player === "1" && computer === "1"){
+  else if (player === '2' && computer === '2' || 
+      player === '3' && computer === '3' ||
+      player === '1' && computer === '1'){
     return 0;
   }
  
@@ -95,7 +95,7 @@ console.assert(checkGame('1', '3') === -1, 'Skæri tapar fyrir stein');
 function round() {
   // TODO útfæra
   // 1. Spyrja um hvað spilað, ef cancel, hætta
-  let player = prompt("Skæri (1), steinn (2), blað(3)?");
+  const player = prompt("Skæri (1), steinn (2), blað(3)?");
   
   if (player === null){
     return null;
@@ -103,10 +103,10 @@ function round() {
   
   // 2. Ef ógilt, tölva vinnur
   // 3. Velja gildi fyrir tölvu með `Math.floor(Math.random() * 3) + 1` sem skilar heiltölu á [1, 3]
-  let computer = toString(Math.floor(Math.random() * 3) + 1);
+  const computer = toString(Math.floor(Math.random() * 3) + 1);
   // 4. Nota `checkGame()` til að finna hver vann
   // 5. Birta hver vann
-  if (player > 3 || player < 1){
+  if (player !== '1' || player !== '2' || player !== '3'){
     return -1;
   }
 
@@ -137,7 +137,6 @@ function play() {
   const playerRounds = 0;
   const computerRounds = 0;
   
-  // TODO útfæra
   // 1. Spyrja um fjölda leikja
   const bestOf = prompt("Besta af?");
   
@@ -174,7 +173,6 @@ function play() {
  * Birtir stöðu spilara.
  */
 function games() {
-  // TODO útfæra
   confirm(`Þú hefur spilað ${wins}${losses} leiki.\n Þú hefur unnið ${wins}, eða ${100*(wins/(wins+losses)).toFixed(2)} af heild.`);
 }
 // Hér getum við ekki skrifað test þar sem fallið les úr global state
